@@ -1,3 +1,3 @@
-pubilc static void main(String args[]){
-    System.out.println("hello sample java")
+public static void main(String args[]){
+    System.out.println("hello sample java");
 }
