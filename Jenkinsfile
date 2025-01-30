@@ -24,5 +24,24 @@ pipeline {
                 echo "Deploying...."
             }
         }
+         stage('Build docker image') {
+            steps {
+                script{
+                   dockerImage = docker.build("naresh20/hello-world-java:${env.BUILD_TAG}")
+                }
+                
+            }
+        }
+        stage('push docker image') {
+            steps {
+                script{
+                   docker.withRegistry('', 'dockerhub'){
+                   dockerImage.push();
+                   dockerImage.push('latest');
+                   }
+                }
+                
+            }
+        }
     }
 }
