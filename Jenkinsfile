@@ -5,7 +5,6 @@ pipeline {
       stages {
         stage('Build') {
             steps {
-                sh 'docker --version'
                 echo "Building.."
                 echo "PATH - $PATH"
                 echo "BUILD_NUMBER - $env.BUILD_NUMBER"
