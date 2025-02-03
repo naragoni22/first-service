@@ -3,7 +3,7 @@ pipeline {
   //agent {docker { image 'node:23.6'}}
   agent any
      tools{
-     maven 'maven_3_9_9'
+     maven 'Apache Maven 3.8.4'
      }
 
   stages{
