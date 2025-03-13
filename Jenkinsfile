@@ -1,16 +1,31 @@
-pipeline {
-     agent any
-     tools{
-     maven 'LocalMaven'
-     }
-     stages{
-         stage('Build Maven'){
-             steps{
-               checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/naragoni22/first-service.git']])
-               sh 'maven clean install'
+pipeline{
 
-             }
+    agent none
+stages{
+    stage('front-end')
+        {
+            agent {
+                docker {image 'node'}
+            }
+            
+      steps{
+          script{
+           sh 'node --version'
+                }
+            }
          }
-
-     }
- }
+    
+     stage('backend')
+        {
+            agent {
+                docker {image 'maven'}
+            }
+            
+      steps{
+          script{
+           sh 'mvn --version'
+                }
+            }
+         }
+       }
+}
