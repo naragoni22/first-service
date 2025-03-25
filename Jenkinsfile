@@ -1,5 +1,8 @@
 pipeline{
    agent any
+    environment{
+        VERSION = "${env.BUILD_ID}"
+    }
 stages{
         stage("Cleanup Workspace"){
                 steps {
@@ -19,6 +22,20 @@ stages{
             }
 
        }
+   stage("docker build & docker push"){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'dockerlogin', variable: 'docker_pass')]) {
+                             sh '''
+                                docker build -t naresh20/springapp:${VERSION} .
+                                docker login -u naresh20 -p $docker_pass  
+                                docker push  naresh20/springapp:${VERSION}
+                                docker rmi naresh20/springapp:${VERSION}
+                            '''
+                    }
+                }
+            }
+        }
 
        stage("Test Application"){
            steps {
