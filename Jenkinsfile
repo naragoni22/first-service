@@ -1,31 +1,29 @@
 pipeline{
-
-    agent none
+   agent any
 stages{
-    stage('front-end')
-        {
-            agent {
-                docker {image 'node'}
-            }
-            
-      steps{
-          script{
-           sh 'node --version'
+        stage("Cleanup Workspace"){
+                steps {
+                cleanWs()
                 }
-            }
-         }
-    
-     stage('backend')
-        {
-            agent {
-                docker {image 'maven'}
-            }
-            
-      steps{
-          script{
-           sh 'mvn --version'
+        }
+
+        stage("Checkout from SCM"){
+                steps {
+                    git branch: 'main', credentialsId: 'github', url: 'https://github.com/naragoni22/register-app.git'
                 }
+        }
+
+        stage("Build Application"){
+            steps {
+                sh "mvn clean package"
             }
-         }
+
        }
+
+       stage("Test Application"){
+           steps {
+                 sh "mvn test"
+           }
+       }
+
 }
