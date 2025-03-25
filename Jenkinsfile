@@ -31,8 +31,7 @@ stages{
                 script{
                     withCredentials([string(credentialsId: 'dockerlogin', variable: 'docker_pass')]) {
                              sh '''
-                                docker build -t naresh20/springapp:${VERSION} .
-                                docker login -u naresh20 -p $docker_pass  
+                                docker build -t naresh20/springapp:${VERSION} . 
                                 docker push  naresh20/springapp:${VERSION}
                                 docker rmi naresh20/springapp:${VERSION}
                             '''
