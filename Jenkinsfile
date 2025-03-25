@@ -29,7 +29,7 @@ stages{
    stage("docker build & docker push"){
             steps{
                 script{
-                    withCredentials([string(credentialsId: 'dockerlogin', variable: 'docker_pass')]) {
+                    withCredentials([gitUsernamePassword(credentialsId: 'dockerhub', gitToolName: 'git')]) {
                              sh '''
                                 docker build -t naresh20/springapp:${VERSION} . 
                                 docker push  naresh20/springapp:${VERSION}
